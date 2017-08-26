@@ -16,12 +16,12 @@ public ArrayList<Categoria> getAll() throws Exception{
 	ArrayList<Categoria> cats= new ArrayList<Categoria>();
 	try{
 		stmt = FactoryConexion.getInstancia().getConn().createStatement();
-		rs = stmt.executeQuery("select * from categorias");
+		rs = stmt.executeQuery("select id_categoria, descripcion from categorias");
 		if(rs!=null){
 			while(rs.next()){
 				Categoria c=new Categoria();
 				c.setId_categoria(rs.getInt("id_categoria"));
-				c.setNombre(rs.getString("nombre"));
+				c.setDescripcion(rs.getString("descripcion"));
 				cats.add(c);
 				}
 			}

@@ -1,11 +1,9 @@
 package Data;
  import java.util.ArrayList;
- import javax.swing.JOptionPane;
  import java.sql.*;
  import Entity.*;
  import Util.AppDataException;
- import java.security.KeyStore.ProtectionParameter;
-
+ 
 
 public class DataPersona {
 	
@@ -15,15 +13,18 @@ public class DataPersona {
 		ArrayList<Persona> pers= new ArrayList<Persona>();
 		try {
 		 	stmt = FactoryConexion.getInstancia().getConn().createStatement();
-		 	rs = stmt.executeQuery("select * from personas");
+		 	rs = stmt.executeQuery("select * from reservas.personas p inner join reservas.categorias c on p.id_categoria=c.id_categoria");
 		 	if(rs!=null){
 		 		while(rs.next()){
 		 			Persona p=new Persona();
+		 			p.setCategoria(new Categoria());
 		 			p.setIdpersona(rs.getInt("idpersona"));
 		 			p.setNombre(rs.getString("nombre"));
 		 			p.setApellido(rs.getString("apellido"));
 		 			p.setDni(rs.getString("dni"));
 		 			p.setHabilitado(rs.getBoolean("habilitado"));
+		 			p.getCategoria().setId_categoria(rs.getInt("id_categoria"));
+		 			p.getCategoria().setDescripcion(rs.getString("descripcion"));
 		 			pers.add(p);
 		 						}
 		 				}		
@@ -48,16 +49,20 @@ public class DataPersona {
 		 		ResultSet rs=null;
 		 		try {
 		 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-		 					"select idpersona, nombre, apellido, dni, habilitado from personas where dni=?");
+		 					"select idpersona, nombre, apellido, dni, habilitado, p.id_categoria, c.descripcion from personas p "
+		 					+ "inner join categorias c on p.id_categoria=c.id_categoria where dni=?");
 		 			stmt.setString(1, per.getDni());
 		 			rs=stmt.executeQuery();
 		 			if(rs!=null && rs.next()){
 		 					p=new Persona();
+		 					p.setCategoria(new Categoria());
 		 					p.setIdpersona(rs.getInt("idpersona"));
 		 					p.setNombre(rs.getString("nombre"));
 		 					p.setApellido(rs.getString("apellido"));
 		 					p.setDni(rs.getString("dni"));
 		 					p.setHabilitado(rs.getBoolean("habilitado"));
+		 					p.getCategoria().setId_categoria(rs.getInt("id_categoria"));
+		 					p.getCategoria().setDescripcion(rs.getString("descripcion"));
 		 			}
 		 			
 		} catch (Exception e) {
@@ -81,13 +86,14 @@ public class DataPersona {
 		 		ResultSet keyResultSet=null;
 		 		try {
 		 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-		 					"insert into personas(dni, nombre, apellido, habilitado) values (?,?,?,?)",
+		 					"insert into personas(dni, nombre, apellido, habilitado, id_categoria) values (?,?,?,?.?)",
 		 					PreparedStatement.RETURN_GENERATED_KEYS
 		 					);
 		 			stmt.setString(1, p.getDni());
 		 			stmt.setString(2, p.getNombre());
 		 			stmt.setString(3, p.getApellido());
 		 			stmt.setBoolean(4, p.getHabilitado());
+		 			stmt.setInt(5, p.getCategoria().getId_categoria());
 		 			stmt.executeUpdate();
 		 			keyResultSet=stmt.getGeneratedKeys();
 		 			if(keyResultSet!=null && keyResultSet.next()){

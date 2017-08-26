@@ -6,12 +6,7 @@ import Util.AppDataException;
 
 public class FactoryConexion {
 	private String driver="com.mysql.jdbc.Driver";
-	private String host="localhost";
-	private String port="33060";
-	private String user="root";
-	private String pass="";
-	private String db="reservas";
-	
+		
 	private static FactoryConexion instancia;
 	
 		
