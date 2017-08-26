@@ -66,6 +66,7 @@ public class Persona {
 		 this.setNombre(nombre);
 		 this.setApellido(apellido);
 		 this.setHabilitado(habilitado);
+	
 		 }
 	public Persona(){}
 	 

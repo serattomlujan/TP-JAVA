@@ -8,7 +8,7 @@ private String nombre;
 private int cant_max;
 private int lim_tiempo;
 private int dias_anticip;
-private char encargado;
+private boolean encargado;
 
 
 public int getIdtipo_elemento() {
@@ -41,13 +41,27 @@ public int getDias_anticip() {
 public void setDias_anticip(int dias_anticip) {
 	this.dias_anticip = dias_anticip;
 }
-public char getEncargado() {
+public boolean getEncargado() {
 	return encargado;
 }
-public void setEncargado(char encargado) {
+public void setEncargado(boolean encargado) {
 	this.encargado = encargado;
 }
 	
+@Override
+public String toString(){
+return this.getNombre();
+}
+
+@Override
+public boolean equals(Object o){
+return (o instanceof Tipo_Elemento && ((Tipo_Elemento)o).getIdtipo_elemento()==this.getIdtipo_elemento());
+}
+
+@Override
+public int hashCode(){
+return ((Integer)this.getIdtipo_elemento()).hashCode();
+}
 	
 	
 }

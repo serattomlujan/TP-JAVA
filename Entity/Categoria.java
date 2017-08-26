@@ -3,7 +3,7 @@ package Entity;
 public class Categoria {
 
 	private int id_categoria;
-	private String nombre;
+	private String descripcion;
 	
 	
 	public int getId_categoria() {
@@ -12,18 +12,18 @@ public class Categoria {
 	public void setId_categoria(int id_categoria) {
 		this.id_categoria = id_categoria;
 	}
-	public String getNombre() {
-		return nombre;
+	public String getDescripcion() {
+		return descripcion;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setDescripcion(String nombre) {
+		this.descripcion = nombre;
 	}
 	
-	public Categoria(){};
+	
 	
 	@Override
 	 public String toString(){
-	 return this.getNombre();
+	 return this.getDescripcion();
 	 }
 	 
 	 @Override
