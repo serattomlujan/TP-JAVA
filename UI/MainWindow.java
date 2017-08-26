@@ -3,8 +3,6 @@ package UI;
 import java.awt.EventQueue;
  
 import javax.swing.JFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -51,6 +49,7 @@ mnuABMCPersonaClick();
 }
 });
 mnuPersona.add(mnuABMCPersona);
+
 JMenuItem mntmListado = new JMenuItem("Listado");
 mntmListado.addActionListener(new ActionListener() {
 public void actionPerformed(ActionEvent arg0) {
@@ -59,16 +58,23 @@ mnuListadoPersonaClick();
 });
 mnuPersona.add(mntmListado);
 JMenu mnuTipos = new JMenu("Tipos de Elementos");
-menuBar.add(mnuTipos);
 JMenuItem mnuABMCTipos = new JMenuItem("ABMC Tipos");
 mnuTipos.add(mnuABMCTipos);
-JMenuItem mnuListadoTipos = new JMenuItem("Listado");
-mnuTipos.add(mnuListadoTipos);
 mnuABMCTipos.addActionListener(new ActionListener() {
 public void actionPerformed(ActionEvent arg0) {
 mnuABMCTiposClick();
 }
 });
+menuBar.add(mnuTipos);
+
+JMenuItem mnuListadoTipos = new JMenuItem("Listado");
+mnuListadoTipos.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent arg0) {
+mnuListadoTiposClick();
+}
+});
+mnuTipos.add(mnuListadoTipos);
+
 JMenu mnuElementos = new JMenu("Elementos");
 menuBar.add(mnuElementos);
 JMenuItem mnuABMCElementos = new JMenuItem("ABMC Elementos");
@@ -102,6 +108,10 @@ ABMCTipoElemento td= new ABMCTipoElemento();
 desktopPane.add(td);
 td.setVisible(true);
 }
+protected void mnuListadoTiposClick() {
+ListadoTipos lt= new ListadoTipos();
+desktopPane.add(lt);
+lt.setVisible(true);}
 
 protected void mnuABMCElementosClick() {
 ABMCElementos ed= new ABMCElementos();

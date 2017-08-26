@@ -1,43 +1,38 @@
 package UI;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Controlers.CtrlABMPersona;
-import Entity.Categoria;
+import Controlers.CtrlABMElemento;
 import Entity.Elemento;
+import Entity.Tipo_Elemento;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JCheckBox;
 import javax.swing.JButton;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JComboBox;
-
-import org.jdesktop.beansbinding.BeanProperty;
-import org.jdesktop.beansbinding.AutoBinding;
-import org.jdesktop.beansbinding.Bindings;
-import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import javax.swing.JFrame;
 
 public class ABMCElementos extends JInternalFrame {
+	private CtrlABMElemento ctrl=new CtrlABMElemento();
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtId;
 	private JTextField txtNombre;
+	public JComboBox<Object> cboTipos;
 
 	/**
 	 * Launch the application.
@@ -80,15 +75,40 @@ public class ABMCElementos extends JInternalFrame {
 		
 		JLabel lblTipo = new JLabel("Tipo Elemento");
 		
-		JComboBox cboTipos = new JComboBox();
+		JComboBox<?> cboTipos = new JComboBox<Object>();
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addMouseListener(new MouseAdapter() {
+ 			@Override
+ 			public void mouseClicked(MouseEvent e) {
+ 				buscarClick();
+ 			}
+ 		});
 		
 		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.addMouseListener(new MouseAdapter() {
+ 			@Override
+ 			public void mouseClicked(MouseEvent e) {
+ 				agregarClick();
+ 			}
+ 		});
 		
 		JButton btnBorrar = new JButton("Borrar");
+		btnBorrar.addMouseListener(new MouseAdapter() {
+ 			@Override
+ 			public void mouseClicked(MouseEvent e) {
+ 				borrarClick();
+ 			}
+ 		});
 		
 		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addMouseListener(new MouseAdapter() {
+ 			@Override
+ 			public void mouseClicked(MouseEvent e) {
+ 				modificarClick();
+ 			}
+ 		});
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -144,5 +164,72 @@ public class ABMCElementos extends JInternalFrame {
 					.addContainerGap(68, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
+		loadLists();
 	}
+	
+	 public void loadLists() {
+		 	try {
+		 		this.cboTipos.setModel(new DefaultComboBoxModel<Object>(this.ctrl.getTipos().toArray()));
+		 		this.cboTipos.setSelectedIndex(-1);
+		 	} catch (Exception e) {
+		 JOptionPane.showMessageDialog(this, "Error recuperando Tipos de Elementos");
+		 }
+		 }
+	 
+	 protected void buscarClick() {
+	 		try {
+	 			this.mapearAForm(ctrl.getByNombre(this.txtNombre.getText()));
+	 			}
+	 		catch (Exception e) {
+	 			JOptionPane.showMessageDialog(this, "No se encontró el elemento");
+	 			}
+	 			 	}
+	 	protected void agregarClick() {
+	 		Elemento el = this.mapearDeForm();
+	 		try{
+	 			ctrl.add(el);
+	 			} catch (Exception e) {
+	 			JOptionPane.showMessageDialog(this, "No se pudo guardar");
+	 			}
+	 			this.txtId.setText(String.valueOf(el.getIdelemento()));
+	 			 		
+	 			 	}
+	 	protected void borrarClick(){
+	 		try{
+	 			ctrl.delete(this.mapearDeForm());
+	 			} catch (Exception e) {
+	 			JOptionPane.showMessageDialog(this, e.getMessage());
+	 			}
+	 			 	}
+	 	protected void modificarClick(){
+	 		try{
+	 			ctrl.update(this.mapearDeForm());
+	 			} catch (Exception e) {
+	 			JOptionPane.showMessageDialog(this, e.getMessage());
+	 			}
+	 			 	}
+
+	 	private void mapearAForm(Elemento e){
+	 		this.txtNombre.setText(e.getNombre());
+	 		this.txtId.setText(String.valueOf(e.getIdelemento()));
+	 		if (e.getTipo_Elem() !=null){
+	 			this.cboTipos.setSelectedItem(e.getTipo_Elem());
+	 			};
+	 	}
+	 	
+	 	private Elemento mapearDeForm(){
+	 		Elemento e=new Elemento();
+	 		if(!this.txtId.getText().isEmpty()){
+	 			e.setIdelemento(Integer.parseInt(this.txtId.getText()));
+	 		}
+	 		e.setNombre(this.txtNombre.getText());
+	 		if (cboTipos.getSelectedIndex() != -1){
+	 			 e.setTipo_Elem((Tipo_Elemento)cboTipos.getSelectedItem());
+	 			 }
+	 		return e;
+	 	}
+	 	public void showElemento(Elemento e){
+	 		 this.mapearAForm(e);
+	 		 	
+	 		 }
 }

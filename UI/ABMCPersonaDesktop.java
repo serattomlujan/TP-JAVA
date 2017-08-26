@@ -1,6 +1,5 @@
 package UI;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
@@ -11,7 +10,6 @@ import Controlers.CtrlABMPersona;
 import Entity.Categoria;
 import Entity.Persona;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -27,16 +25,17 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JComboBox;
 
-import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.AutoBinding;
-import org.jdesktop.beansbinding.Bindings;
-import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
+
 
 public class ABMCPersonaDesktop extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("rawtypes")
 	private AutoBinding<Persona, Categoria, JComboBox, Object> cbo;
-
-private CtrlABMPersona ctrl=new CtrlABMPersona();
-private Persona currentPer=new Persona();
+	private CtrlABMPersona ctrl=new CtrlABMPersona();
 	
 private JPanel contentPane;
 private JTextField txtDni;
@@ -47,7 +46,7 @@ private JButton btnAgregar;
 private JButton btnBorrar;
 private JButton btnModificar;
 private JTextField txtId;
-private JComboBox<Object> cboCategoria;
+public JComboBox<Object> cboCategoria;
 
 public static void main(String[] args) {
  		EventQueue.invokeLater(new Runnable() {
@@ -129,6 +128,7 @@ public static void main(String[] args) {
  		JLabel lblCategoria = new JLabel("Categoria");
  		
  		cboCategoria = new JComboBox<Object>();
+ 		
  		GroupLayout gl_contentPane = new GroupLayout(contentPane);
  		gl_contentPane.setHorizontalGroup(
  			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -206,12 +206,14 @@ public static void main(String[] args) {
  		);
  		 contentPane.setLayout(gl_contentPane);
  		 loadLists();
+ 		 initDataBindings();
+ 		 
  		 }
  		 
- 		 private void loadLists() {
+ 		 public void loadLists() {
  		 	try {
- 		 	this.cboCategoria.setModel(new DefaultComboBoxModel<>(this.ctrl.getCategorias().toArray()));
- 		 	this.cboCategoria.setSelectedIndex(-1);
+ 		 		this.cboCategoria.setModel(new DefaultComboBoxModel<Object>(this.ctrl.getCategorias().toArray()));
+ 		 		this.cboCategoria.setSelectedIndex(-1);
  		 	} catch (Exception e) {
  		 JOptionPane.showMessageDialog(this, "Error recuperando Categorias");
  		 }
@@ -221,7 +223,7 @@ public static void main(String[] args) {
  		try {
  			this.mapearAForm(ctrl.getByDni(this.mapearDeForm()));
  			} catch (Exception e) {
- 			JOptionPane.showMessageDialog(this, e.getMessage());
+ 			JOptionPane.showMessageDialog(this, "No se encontró la persona");
  			}
  			 	}
  	protected void agregarClick() {
@@ -229,7 +231,7 @@ public static void main(String[] args) {
  		try{
  			ctrl.add(p);
  			} catch (Exception e) {
- 			JOptionPane.showMessageDialog(this, e.getMessage());
+ 			JOptionPane.showMessageDialog(this, "No se pudo guardar");
  			}
  			this.txtId.setText(String.valueOf(p.getIdpersona()));
  			 		
@@ -255,8 +257,8 @@ public static void main(String[] args) {
  		this.chkHabilitado.setSelected(p.getHabilitado());
  		this.txtId.setText(String.valueOf(p.getIdpersona()));
  		if (p.getCategoria() !=null){
- 			 	this.cboCategoria.setSelectedItem(p.getCategoria());
- 			 };
+ 			this.cboCategoria.setSelectedItem(p.getCategoria());
+ 			};
  	}
  	
  	private Persona mapearDeForm(){
@@ -277,4 +279,6 @@ public static void main(String[] args) {
  		 this.mapearAForm(p);
  		 	
  		 }
+	protected void initDataBindings() {
+	}
  }

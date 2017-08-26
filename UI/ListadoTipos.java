@@ -9,8 +9,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTable;
 
-import Controlers.CtrlABMPersona;
-import Entity.Persona;
+import Controlers.CtrlABMTipoElemento;
+import Entity.Tipo_Elemento;
 
 import java.awt.Color;
 import org.jdesktop.swingbinding.JTableBinding;
@@ -23,18 +23,18 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ListadoPersonas extends JInternalFrame {
+public class ListadoTipos extends JInternalFrame {
 /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-private ArrayList<Persona> pers;
-CtrlABMPersona ctrl= new CtrlABMPersona();
+private ArrayList<Tipo_Elemento> ti;
+CtrlABMTipoElemento ctrl= new CtrlABMTipoElemento();
 	
 private JTable table;
 
-public ListadoPersonas() {
-	setTitle("Listado de Personas");
+public ListadoTipos() {
+	setTitle("Listado de Tipos de Elementos");
 	setClosable(true);
 	setBounds(100, 100, 507, 300);
 	JScrollPane scrollPane = new JScrollPane();
@@ -63,7 +63,7 @@ public ListadoPersonas() {
  table.setBackground(Color.LIGHT_GRAY);
  getContentPane().setLayout(groupLayout);
  try{
- this.pers=ctrl.getAll();
+ this.ti=ctrl.getAll();
  		} catch (Exception e){
  JOptionPane.showMessageDialog(this,e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
  
@@ -71,28 +71,30 @@ public ListadoPersonas() {
  initDataBindings();
  }
  protected void btnEditarClick() {
- int indexPersona=table.convertRowIndexToModel(table.getSelectedRow());
+ int indexTipo=table.convertRowIndexToModel(table.getSelectedRow());
  
- ABMCPersonaDesktop pd= new ABMCPersonaDesktop();
- pd.showPersona(this.pers.get(indexPersona));
+ ABMCTipoElemento tip= new ABMCTipoElemento();
+ tip.showTipo(this.ti.get(indexTipo));
  
- this.getDesktopPane().add(pd);
- pd.setVisible(true);
+ this.getDesktopPane().add(tip);
+ tip.setVisible(true);
  		
  }
  protected void initDataBindings() {
- JTableBinding<Persona, List<Persona>, JTable> jTableBinding = SwingBindings.createJTableBinding(UpdateStrategy.READ, pers, table);
- BeanProperty<Persona, String> personaBeanProperty = BeanProperty.create("nombre");
+ JTableBinding<Tipo_Elemento, List<Tipo_Elemento>, JTable> jTableBinding = SwingBindings.createJTableBinding(UpdateStrategy.READ, ti, table);
+ BeanProperty<Tipo_Elemento, String> personaBeanProperty = BeanProperty.create("nombre");
 jTableBinding.addColumnBinding(personaBeanProperty).setColumnName("Nombre").setEditable(false);
-BeanProperty<Persona, String> personaBeanProperty_1 = BeanProperty.create("apellido");
-jTableBinding.addColumnBinding(personaBeanProperty_1).setColumnName("Apellido").setEditable(false);
+BeanProperty<Tipo_Elemento, String> personaBeanProperty_1 = BeanProperty.create("cant_max");
+jTableBinding.addColumnBinding(personaBeanProperty_1).setColumnName("Cantidad maxima").setEditable(false);
 
-BeanProperty<Persona, String> personaBeanProperty_2 = BeanProperty.create("dni");
-jTableBinding.addColumnBinding(personaBeanProperty_2).setColumnName("DNI").setEditable(false);
-BeanProperty<Persona, String> personaBeanProperty_3 = BeanProperty.create("categoria.descripcion");
-jTableBinding.addColumnBinding(personaBeanProperty_3).setColumnName("Categoria").setEditable(false);
+BeanProperty<Tipo_Elemento, String> personaBeanProperty_2 = BeanProperty.create("lim_tiempo");
+jTableBinding.addColumnBinding(personaBeanProperty_2).setColumnName("Limite de Tiempo").setEditable(false);
+BeanProperty<Tipo_Elemento, String> personaBeanProperty_3 = BeanProperty.create("dias_anticip");
+jTableBinding.addColumnBinding(personaBeanProperty_3).setColumnName("Dias Anticipación").setEditable(false);
 
 jTableBinding.setEditable(false);
 jTableBinding.bind();
 }
 }
+
+

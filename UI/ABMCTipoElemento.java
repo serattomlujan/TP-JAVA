@@ -1,18 +1,15 @@
 package UI;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Controlers.CtrlABMPersona;
-import Entity.Categoria;
+import Controlers.CtrlABMTipoElemento;
+
 import Entity.Tipo_Elemento;
 
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -25,15 +22,17 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JComboBox;
 
-import org.jdesktop.beansbinding.BeanProperty;
-import org.jdesktop.beansbinding.AutoBinding;
-import org.jdesktop.beansbinding.Bindings;
-import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import javax.swing.JFrame;
 
 public class ABMCTipoElemento extends JInternalFrame {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private CtrlABMTipoElemento ctrl=new CtrlABMTipoElemento();
 
 	private JPanel contentPane;
 	private JTextField txtID;
@@ -41,6 +40,7 @@ public class ABMCTipoElemento extends JInternalFrame {
 	private JTextField txtCantMax;
 	private JTextField txtLimite;
 	private JTextField txtDiasAntic;
+	private JCheckBox chkEncargado;
 
 	/**
 	 * Launch the application.
@@ -97,14 +97,38 @@ public class ABMCTipoElemento extends JInternalFrame {
 		txtDiasAntic.setColumns(10);
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addMouseListener(new MouseAdapter() {
+ 			@Override
+ 			public void mouseClicked(MouseEvent e) {
+ 				buscarClick();
+ 			}
+ 		});
 		
 		JCheckBox chkEncargado = new JCheckBox("Encargado");
 		
 		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.addMouseListener(new MouseAdapter() {
+ 			@Override
+ 			public void mouseClicked(MouseEvent e) {
+ 				agregarClick();
+ 			}
+ 		});
 		
 		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addMouseListener(new MouseAdapter() {
+ 			@Override
+ 			public void mouseClicked(MouseEvent e) {
+ 				modificarClick();
+ 			}
+ 		});
 		
 		JButton btnBorrar = new JButton("Borrar");
+		btnBorrar.addMouseListener(new MouseAdapter() {
+ 			@Override
+ 			public void mouseClicked(MouseEvent e) {
+ 				borrarClick();
+ 			}
+ 		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -177,4 +201,65 @@ public class ABMCTipoElemento extends JInternalFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
+	
+	protected void buscarClick() {
+ 		try {
+ 			this.mapearAForm(ctrl.getByNomTipo(this.txtNombre.getText()));
+ 			} 
+ 		catch (Exception e) {
+ 			JOptionPane.showMessageDialog(this, "No se encontro el tipo");
+ 			}
+ 			 	}
+ 	protected void agregarClick() {
+ 		Tipo_Elemento t = this.mapearDeForm();
+ 		try{
+ 			ctrl.add(t);
+ 			} catch (Exception e) {
+ 			JOptionPane.showMessageDialog(this, "No se pudo guardar");
+ 			}
+ 			this.txtID.setText(String.valueOf(t.getIdtipo_elemento()));
+ 			 		
+ 			 	}
+ 	protected void borrarClick(){
+ 		try{
+ 			ctrl.delete(this.mapearDeForm());
+ 			} catch (Exception e) {
+ 			JOptionPane.showMessageDialog(this, e.getMessage());
+ 			}
+ 			 	}
+ 	protected void modificarClick(){
+ 		try{
+ 			ctrl.update(this.mapearDeForm());
+ 			} catch (Exception e) {
+ 			JOptionPane.showMessageDialog(this, e.getMessage());
+ 			}
+ 			 	}
+ 	
+ 	private void mapearAForm(Tipo_Elemento t){
+ 		this.txtNombre.setText(t.getNombre());
+ 		this.txtCantMax.setText(String.valueOf(t.getCant_max()));
+ 		this.txtLimite.setText(String.valueOf(t.getLim_tiempo()));
+ 		this.txtDiasAntic.setText(String.valueOf(t.getDias_anticip()));
+ 		this.txtID.setText(String.valueOf(t.getIdtipo_elemento()));
+ 		this.chkEncargado.setSelected(t.getEncargado());
+ 		
+ 	}
+ 	
+ 	private Tipo_Elemento mapearDeForm(){
+ 		Tipo_Elemento t=new Tipo_Elemento();
+ 		if(!this.txtID.getText().isEmpty()){
+ 			t.setIdtipo_elemento(Integer.parseInt(this.txtID.getText()));
+ 		}
+ 		t.setNombre(this.txtNombre.getText());
+ 		t.setCant_max(Integer.parseInt(this.txtCantMax.getText()));
+ 		t.setLim_tiempo(Integer.parseInt(this.txtLimite.getText()));
+ 		t.setDias_anticip(Integer.parseInt(this.txtDiasAntic.getText()));
+ 		t.setEncargado(this.chkEncargado.isSelected());
+ 		
+ 		return t;
+ 	}
+ 	public void showTipo(Tipo_Elemento t){
+		 this.mapearAForm(t);
+		 	
+		 }
 }
