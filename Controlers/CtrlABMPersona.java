@@ -1,5 +1,6 @@
 package Controlers;
 import java.util.ArrayList;
+
 import Data.DataCategoria;
 import Data.DataPersona;
 import Entity.Persona;
@@ -14,8 +15,9 @@ public class CtrlABMPersona {
 	public CtrlABMPersona(){
 	dataPer= new DataPersona();
 	pers= new ArrayList<Persona>();
-	pers.add(new Persona("343434","Hugo","Lopez",true));
-	pers.add(new Persona("353535","Ana","Martinez",true));}
+	//pers.add(new Persona("343434","Hugo","Lopez",true));
+	//pers.add(new Persona("353535","Ana","Martinez",true))
+	}
 	
 	
 	public void add(Persona p) throws Exception{
@@ -56,7 +58,8 @@ public class CtrlABMPersona {
 		return dataPer.getAll();}
 	
 	public ArrayList<Categoria> getCategorias() throws Exception{
-		 return dataCat.getAll();
+		return dataCat.getAll();
+	
 		}
 		
 		
