@@ -104,19 +104,19 @@ throw e;
  	
 	public void remove(Elemento el) throws Exception{
  		PreparedStatement stmt=null;
- 		ResultSet keyResultSet=null;
+ 		
  		try {
  			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
- 					"delete * from elementos where nombre=?",
+ 					"delete from elementos where nombre=?",
  					PreparedStatement.RETURN_GENERATED_KEYS
  					);
- 			stmt.executeQuery();
+ 			stmt.setString(1, el.getNombre());
+ 			stmt.executeUpdate();
  			
  		} catch (SQLException | AppDataException e) {
  			throw e;
  		}
  		try {
- 			if(keyResultSet!=null)keyResultSet.close();
  			if(stmt!=null)stmt.close();
  			FactoryConexion.getInstancia().releaseConn();
  		} catch (SQLException e) {

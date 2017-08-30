@@ -117,27 +117,20 @@ public class DataPersona {
 		
 		public void remove(Persona p) throws Exception{
 	 		PreparedStatement stmt=null;
-	 		ResultSet keyResultSet=null;
+	 		//ResultSet keyResultSet=null;
 	 		try {
 	 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-	 					"delete into personas where dni=?",
+	 					"delete from personas where dni=?",
 	 					PreparedStatement.RETURN_GENERATED_KEYS
 	 					);
 	 			stmt.setString(1, p.getDni());
-	 			stmt.setString(2, p.getNombre());
-	 			stmt.setString(3, p.getApellido());
-	 			stmt.setBoolean(4, p.getHabilitado());
-	 			stmt.setInt(5, p.getCategoria().getId_categoria());
 	 			stmt.executeUpdate();
-	 			keyResultSet=stmt.getGeneratedKeys();
-	 			if(keyResultSet!=null && keyResultSet.next()){
-	 				p.setIdpersona(keyResultSet.getInt(1));
-	 			}
+	 			
 	 		} catch (SQLException | AppDataException e) {
 	 			throw e;
 	 		}
 	 		try {
-	 			if(keyResultSet!=null)keyResultSet.close();
+	 			//if(keyResultSet!=null)keyResultSet.close();
 	 			if(stmt!=null)stmt.close();
 	 			FactoryConexion.getInstancia().releaseConn();
 	 		} catch (SQLException e) {
