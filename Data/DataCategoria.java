@@ -1,11 +1,11 @@
-package Data;
+package data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import Entity.Categoria;
+import entity.Categoria;
 
 
 public class DataCategoria {

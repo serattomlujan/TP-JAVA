@@ -1,8 +1,9 @@
-package Data;
+package data;
 import java.util.ArrayList;
 import java.sql.*;
-import Entity.*;
-import Util.AppDataException;
+
+import util.AppDataException;
+import entity.*;
 
 
 public class DataElemento {
@@ -19,9 +20,9 @@ public class DataElemento {
 		 			Elemento el=new Elemento();
 		 			el.setTipo_Elem(new Tipo_Elemento());
 		 			el.setIdelemento(rs.getInt("idelemento"));
-		 			el.setNombre(rs.getString("e.nombre"));
+		 			el.setNombre(rs.getString("nombre"));
 		 			el.getTipo_Elem().setIdtipo_elemento(rs.getInt("idtipo_elemento"));
-		 			el.getTipo_Elem().setNombre(rs.getString("te.nombre"));
+		 			el.getTipo_Elem().setNombre_tipo(rs.getString("nombre_tipo"));
 		 			ele.add(el);
 		 						}
 		 				}		
@@ -46,17 +47,17 @@ public class DataElemento {
  		ResultSet rs=null;
  		try {
  			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
- 					"select idelemento, e.nombre, e.idtipo_elemento, t.nombre from elementos e "
- 					+ "inner join tipo_elemento t on e.idtipo_elemento=t.idtipo_elemento where e.nombre=?");
+ 					"select idelemento, e.nombre, e.idtipo_elemento, nombre_tipo from elementos e "
+ 					+ "inner join tipo_elemento t on e.idtipo_elemento=t.idtipo_elemento where nombre=?");
  			stmt.setString(1, elem.getNombre());
  			rs=stmt.executeQuery();
  			if(rs!=null && rs.next()){
  					el=new Elemento();
  					el.setTipo_Elem(new Tipo_Elemento());
  					el.setIdelemento(rs.getInt("idelemento"));
- 					el.setNombre(rs.getString("e.nombre"));
+ 					el.setNombre(rs.getString("nombre"));
  					el.getTipo_Elem().setIdtipo_elemento(rs.getInt("idtipo_elemento"));
- 					el.getTipo_Elem().setNombre(rs.getString("t.nombre"));
+ 					el.getTipo_Elem().setNombre_tipo(rs.getString("nombre_tipo"));
  			}
  			
 } catch (Exception e) {
@@ -89,6 +90,28 @@ throw e;
  			if(keyResultSet!=null && keyResultSet.next()){
  				el.setIdelemento(keyResultSet.getInt(1));
  			}
+ 		} catch (SQLException | AppDataException e) {
+ 			throw e;
+ 		}
+ 		try {
+ 			if(keyResultSet!=null)keyResultSet.close();
+ 			if(stmt!=null)stmt.close();
+ 			FactoryConexion.getInstancia().releaseConn();
+ 		} catch (SQLException e) {
+ 			e.printStackTrace();
+ 		}
+ 	}
+ 	
+	public void remove(Elemento el) throws Exception{
+ 		PreparedStatement stmt=null;
+ 		ResultSet keyResultSet=null;
+ 		try {
+ 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+ 					"delete * from elementos where nombre=?",
+ 					PreparedStatement.RETURN_GENERATED_KEYS
+ 					);
+ 			stmt.executeQuery();
+ 			
  		} catch (SQLException | AppDataException e) {
  			throw e;
  		}

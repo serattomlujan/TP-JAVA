@@ -1,8 +1,9 @@
 
 
-package Data;
+package data;
 import java.sql.*;
-import Util.AppDataException;
+
+import util.AppDataException;
 
 public class FactoryConexion {
 	private String driver="com.mysql.jdbc.Driver";
@@ -33,7 +34,7 @@ public class FactoryConexion {
 		try {
 			if(conn==null || conn.isClosed()){	
 				conn = DriverManager.getConnection(
-						 "jdbc:mysql://localhost:3306/reservas?useSSL=false","root","root");
+						 "jdbc:mysql://localhost:3306/reservas?useSSL=false","root","123");
 			}
 		} catch (SQLException e) {
 			throw new AppDataException(e, "Error al conectar a la base de datos");
