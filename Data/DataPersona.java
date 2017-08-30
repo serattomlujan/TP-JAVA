@@ -90,7 +90,7 @@ public class DataPersona {
 		 		try {
 		 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
 		 					"insert into personas(dni, nombre, apellido, habilitado, id_categoria) "
-		 					+ "values (?,?,?,?.?)",
+		 					+ "values (?,?,?,?,?)",
 		 					PreparedStatement.RETURN_GENERATED_KEYS
 		 					);
 		 			stmt.setString(1, p.getDni());

@@ -84,7 +84,7 @@ throw e;
  		ResultSet keyResultSet=null;
  		try {
  			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
- 					"insert into tipo_elemento(nombre_tipo, cant_max, lim_tiempo, dias_anticip, encargado) values (?,?,?,?.?)",
+ 					"insert into tipo_elemento(nombre_tipo, cant_max, lim_tiempo, dias_anticip, encargado) values (?,?,?,?,?)",
  					PreparedStatement.RETURN_GENERATED_KEYS
  					);
  			stmt.setString(1, t.getNombre_tipo());
