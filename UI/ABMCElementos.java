@@ -5,11 +5,6 @@ import java.awt.EventQueue;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import Controlers.CtrlABMElemento;
-import Entity.Elemento;
-import Entity.Tipo_Elemento;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -17,10 +12,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+
+import controlers.CtrlABMElemento;
+import entity.Elemento;
+import entity.Tipo_Elemento;
 
 public class ABMCElementos extends JInternalFrame {
 	private CtrlABMElemento ctrl=new CtrlABMElemento();
@@ -32,7 +33,7 @@ public class ABMCElementos extends JInternalFrame {
 	private JPanel contentPane;
 	private JTextField txtId;
 	private JTextField txtNombre;
-	public JComboBox<Object> cboTipos;
+	private JComboBox cboTipos;
 
 	/**
 	 * Launch the application.
@@ -75,7 +76,7 @@ public class ABMCElementos extends JInternalFrame {
 		
 		JLabel lblTipo = new JLabel("Tipo Elemento");
 		
-		JComboBox<?> cboTipos = new JComboBox<Object>();
+		cboTipos = new JComboBox<Object>();
 		
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addMouseListener(new MouseAdapter() {
@@ -116,11 +117,11 @@ public class ABMCElementos extends JInternalFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(30)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(lblTipo)
 									.addGap(18)
-									.addComponent(cboTipos, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE))
+									.addComponent(cboTipos, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblId)
@@ -128,9 +129,9 @@ public class ABMCElementos extends JInternalFrame {
 									.addGap(48)
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 										.addComponent(txtId)
-										.addComponent(txtNombre, GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
-									.addGap(35)
-									.addComponent(btnBuscar))))
+										.addComponent(txtNombre, GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))))
+							.addGap(35)
+							.addComponent(btnBuscar))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(55)
 							.addComponent(btnAgregar)
@@ -138,7 +139,7 @@ public class ABMCElementos extends JInternalFrame {
 							.addComponent(btnBorrar)
 							.addGap(18)
 							.addComponent(btnModificar)))
-					.addContainerGap(91, Short.MAX_VALUE))
+					.addContainerGap(43, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -169,7 +170,7 @@ public class ABMCElementos extends JInternalFrame {
 	
 	 public void loadLists() {
 		 	try {
-		 		this.cboTipos.setModel(new DefaultComboBoxModel<Object>(this.ctrl.getTipos().toArray()));
+		 		this.cboTipos.setModel(new DefaultComboBoxModel(this.ctrl.getTipos().toArray()));
 		 		this.cboTipos.setSelectedIndex(-1);
 		 	} catch (Exception e) {
 		 JOptionPane.showMessageDialog(this, "Error recuperando Tipos de Elementos");

@@ -1,14 +1,21 @@
 package UI;
  
+import java.awt.Dimension;
 import java.awt.EventQueue;
  
+
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JDesktopPane;
+
 import java.awt.BorderLayout;
 
 public class MainWindow {
@@ -17,10 +24,15 @@ private JFrame frmSistemaDeReservas;
 private JDesktopPane desktopPane;
 public static void main(String[] args) {
 EventQueue.invokeLater(new Runnable() {
+
 public void run() {
 	try {
 		MainWindow window = new MainWindow();
-		window.frmSistemaDeReservas.setVisible(true);
+		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+			Dimension ventana = window.frmSistemaDeReservas.getSize();
+			window.frmSistemaDeReservas.setLocation(Integer.valueOf((pantalla.width-ventana.width)/2), 
+					Integer.valueOf(pantalla.height-ventana.height)/2);
+			window.frmSistemaDeReservas.setVisible(true);
 	} catch (Exception e) {
 	e.printStackTrace();
 	}
@@ -35,8 +47,11 @@ initialize();
 private void initialize() {
 frmSistemaDeReservas = new JFrame();
 frmSistemaDeReservas.setTitle("Sistema de Reservas");
-frmSistemaDeReservas.setBounds(100, 100, 678, 450);
+frmSistemaDeReservas.setBounds(100, 100, 715, 485);
 frmSistemaDeReservas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+frmSistemaDeReservas.getContentPane().setLayout(new BorderLayout(0, 0));
+desktopPane = new JDesktopPane();
+frmSistemaDeReservas.getContentPane().add(desktopPane, BorderLayout.CENTER);
 
 JMenuBar menuBar = new JMenuBar();
 frmSistemaDeReservas.setJMenuBar(menuBar);
@@ -79,18 +94,32 @@ JMenu mnuElementos = new JMenu("Elementos");
 menuBar.add(mnuElementos);
 JMenuItem mnuABMCElementos = new JMenuItem("ABMC Elementos");
 mnuElementos.add(mnuABMCElementos);
-JMenuItem mnuListadoElementos = new JMenuItem("Listado ");
-mnuElementos.add(mnuListadoElementos);
 mnuABMCElementos.addActionListener(new ActionListener() {
 public void actionPerformed(ActionEvent arg0) {
 mnuABMCElementosClick();
 }});
+
+JMenuItem mnuListadoElementos = new JMenuItem("Listado ");
+mnuElementos.add(mnuListadoElementos);
+mnuListadoElementos.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent arg0) {
+mnuListadoElementosClick();
+}});
+
+
 JMenu mnuReservas = new JMenu("Reservas");
 menuBar.add(mnuReservas);
-frmSistemaDeReservas.getContentPane().setLayout(new BorderLayout(0, 0));
-desktopPane = new JDesktopPane();
-frmSistemaDeReservas.getContentPane().add(desktopPane, BorderLayout.CENTER);
+JMenuItem mnuReservaElemento = new JMenuItem("Reserva Elemento");
+mnuReservas.add(mnuReservaElemento);
+mnuReservaElemento.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent arg0) {
+mnuReservaElementoClick();
+}});
+
+JMenuItem mnuReservasPendientes = new JMenuItem("Reservas pendientes");
+mnuReservas.add(mnuReservasPendientes);
 }
+
 protected void mnuABMCPersonaClick() {
 ABMCPersonaDesktop pd= new ABMCPersonaDesktop();
 desktopPane.add(pd);
@@ -118,4 +147,17 @@ ABMCElementos ed= new ABMCElementos();
 desktopPane.add(ed);
 ed.setVisible(true);
 }
+
+
+protected void mnuListadoElementosClick() {
+ListadoElementos le= new ListadoElementos();
+desktopPane.add(le);
+le.setVisible(true);
 }
+
+protected void mnuReservaElementoClick() {
+	ReservaElemento rel=new ReservaElemento();
+	desktopPane.add(rel);
+	rel.setVisible(true);
+};}
+
