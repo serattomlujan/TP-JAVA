@@ -1,12 +1,13 @@
-package Controlers;
+package controlers;
 import java.util.ArrayList;
 
 
-import Data.DataTipoElemento;
-import Data.DataElemento;
 
-import Entity.Tipo_Elemento;
-import Entity.Elemento;
+
+import data.DataElemento;
+import data.DataTipoElemento;
+import entity.Elemento;
+import entity.Tipo_Elemento;
 
 public class CtrlABMElemento {
 		private DataElemento dataEle;
@@ -15,6 +16,7 @@ public class CtrlABMElemento {
 		
 	public CtrlABMElemento(){
 		dataEle= new DataElemento();
+		dataTie=new DataTipoElemento();
 		elem= new ArrayList<Elemento>();
 		}
 		
@@ -23,12 +25,12 @@ public class CtrlABMElemento {
 	
 	
    public void delete(Elemento e) throws Exception{
-	   this.elem.remove(e);}
+	   dataEle.remove(e);}
    
 		
 	public void update(Elemento e) throws Exception{
-		this.delete(e);
-		this.add(e);}
+		dataEle.remove(e);
+		dataEle.add(e);}
 		
 		
 		
