@@ -110,4 +110,24 @@ throw e;
  	}
  		
 
+	public void remove(Tipo_Elemento t) throws Exception{
+ 		PreparedStatement stmt=null;
+ 			try {
+ 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+ 					"delete from tipo_elemento where nombre_tipo=?",
+ 					PreparedStatement.RETURN_GENERATED_KEYS
+ 					);
+ 			stmt.setString(1, t.getNombre_tipo());
+ 			stmt.executeUpdate();
+ 			
+ 		} catch (SQLException | AppDataException e) {
+ 			throw e;
+ 		}
+ 		try {
+ 			if(stmt!=null)stmt.close();
+ 			FactoryConexion.getInstancia().releaseConn();
+ 		} catch (SQLException e) {
+ 			e.printStackTrace();
+ 		}
+ 	}
 }
