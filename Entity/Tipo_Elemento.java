@@ -1,10 +1,10 @@
 
 
-package Entity;
+package entity;
 
 public class Tipo_Elemento {
 private int idtipo_elemento;
-private String nombre;
+private String nombre_tipo;
 private int cant_max;
 private int lim_tiempo;
 private int dias_anticip;
@@ -17,11 +17,11 @@ public int getIdtipo_elemento() {
 public void setIdtipo_elemento(int idtipo_elemento) {
 	this.idtipo_elemento = idtipo_elemento;
 }
-public String getNombre() {
-	return nombre;
+public String getNombre_tipo() {
+	return nombre_tipo;
 }
-public void setNombre(String nombre) {
-	this.nombre = nombre;
+public void setNombre_tipo(String nombre) {
+	this.nombre_tipo = nombre;
 }
 public int getCant_max() {
 	return cant_max;
@@ -48,9 +48,20 @@ public void setEncargado(boolean encargado) {
 	this.encargado = encargado;
 }
 	
+public Tipo_Elemento (String nombre, int cant, int tiempo, int dias, boolean encargado){
+	 this.setNombre_tipo(nombre);
+	 this.setCant_max(cant);
+	 this.setLim_tiempo(tiempo);
+	 this.setDias_anticip(dias);
+	 this.setEncargado(encargado);
+
+	 }
+
+public Tipo_Elemento(){};
+
 @Override
 public String toString(){
-return this.getNombre();
+return this.getNombre_tipo();
 }
 
 @Override

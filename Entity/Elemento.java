@@ -1,4 +1,4 @@
-package Entity;
+package entity;
 
 public class Elemento {
 	private int idelemento;
@@ -26,10 +26,10 @@ public class Elemento {
 		this.tipo_elemento=te;
 	}
 	
-	public Elemento (String nombre){
-		 this.setNombre(nombre);
+	//public Elemento (String nombre){
+		 //this.setNombre(nombre);
 		
-	}
+	//}
 	public Elemento(){}
 
 }
