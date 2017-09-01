@@ -14,7 +14,7 @@ public class DataElemento {
 		try {
 		 	stmt = FactoryConexion.getInstancia().getConn().createStatement();
 		 	rs = stmt.executeQuery("select * from elementos e "
-		 			+ "inner join tipo_elemento te on e.idtipo_elemento=te.idtipo_elemento");
+		 			+ "inner join tipo_elemento t on e.idtipo_elemento = t.idtipo_elemento ");
 		 	if(rs!=null){
 		 		while(rs.next()){
 		 			Elemento el=new Elemento();
@@ -47,7 +47,7 @@ public class DataElemento {
  		ResultSet rs=null;
  		try {
  			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
- 					"select idelemento, e.nombre, e.idtipo_elemento, nombre_tipo from elementos e "
+ 					"select idelemento, nombre, e.idtipo_elemento, nombre_tipo from elementos e "
  					+ "inner join tipo_elemento t on e.idtipo_elemento=t.idtipo_elemento where nombre=?");
  			stmt.setString(1, elem.getNombre());
  			rs=stmt.executeQuery();
@@ -123,5 +123,29 @@ throw e;
  			e.printStackTrace();
  		}
  	}
+	
+	public void update(Elemento el) throws Exception{
+ 		PreparedStatement stmt=null;
+ 			try {
+ 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+ 					"update elementos set nombre=?, idtipo_elemento=? where idelemento=?",
+ 					PreparedStatement.RETURN_GENERATED_KEYS
+ 					);
+ 			stmt.setString(1, el.getNombre());
+ 			stmt.setInt(2, el.getTipo_Elem().getIdtipo_elemento());
+ 			stmt.setInt(3,el.getIdelemento());
+ 			stmt.executeUpdate();
+ 			 			
+ 		} catch (SQLException | AppDataException e) {
+ 			throw e;
+ 		}
+ 		try {
+ 			if(stmt!=null)stmt.close();
+ 			FactoryConexion.getInstancia().releaseConn();
+ 		} catch (SQLException e) {
+ 			e.printStackTrace();
+ 		}
+ 	}
+ 	
  	
 }

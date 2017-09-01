@@ -130,4 +130,33 @@ throw e;
  			e.printStackTrace();
  		}
  	}
+	
+	public void update(Tipo_Elemento t) throws Exception{
+ 		PreparedStatement stmt=null;
+ 		
+ 		try {
+ 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+ 					"update tipo_elemento "
+ 					+ "set nombre_tipo=?, cant_max=?, lim_tiempo=?, dias_anticip=?, encargado=? "
+ 					+ "where idtipo_elemento=?",
+ 					PreparedStatement.RETURN_GENERATED_KEYS
+ 					);
+ 			stmt.setString(1, t.getNombre_tipo());
+ 			stmt.setInt(2, t.getCant_max());
+ 			stmt.setInt(3, t.getLim_tiempo());
+ 			stmt.setInt(4, t.getDias_anticip());
+ 			stmt.setBoolean(5, t.getEncargado());
+ 			stmt.setInt(6, t.getIdtipo_elemento());
+ 			stmt.executeUpdate();
+ 			
+ 		} catch (SQLException | AppDataException e) {
+ 			throw e;
+ 		}
+ 		try {
+ 			if(stmt!=null)stmt.close();
+ 			FactoryConexion.getInstancia().releaseConn();
+ 		} catch (SQLException e) {
+ 			e.printStackTrace();
+ 		}
+ 	}
 }
