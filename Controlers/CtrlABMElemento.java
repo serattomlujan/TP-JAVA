@@ -29,8 +29,9 @@ public class CtrlABMElemento {
    
 		
 	public void update(Elemento e) throws Exception{
-		dataEle.remove(e);
-		dataEle.add(e);}
+		dataEle.update(e);
+		//dataEle.add(e);
+		}
 		
 		
 		

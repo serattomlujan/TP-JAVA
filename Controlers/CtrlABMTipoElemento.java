@@ -20,13 +20,13 @@ public class CtrlABMTipoElemento {
 	
 	
    public void delete(Tipo_Elemento t) throws Exception{
-	   this.te.remove(t);}
+	   dataTiEl.remove(t);}
    
 		
 	public void update(Tipo_Elemento t) throws Exception{
-		this.delete(t);
-		this.add(t);}
+		dataTiEl.update(t);}
 		
+	
 	public Tipo_Elemento getByNomTipo(Tipo_Elemento t) throws Exception{
 		return this.dataTiEl.getByNomTipo(t);
 		}	
