@@ -30,8 +30,10 @@ public class CtrlABMPersona {
    
 		
 	public void update(Persona p) throws Exception{
-		this.delete(p);
-		this.add(p);}
+		//dataPer.remove(p);
+		//dataPer.add(p);
+		dataPer.modificar(p);
+	}
 		
 		
 		
