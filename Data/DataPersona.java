@@ -117,7 +117,7 @@ public class DataPersona {
 		
 		public void remove(Persona p) throws Exception{
 	 		PreparedStatement stmt=null;
-	 		//ResultSet keyResultSet=null;
+	 		
 	 		try {
 	 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
 	 					"delete from personas where dni=?",
@@ -130,16 +130,43 @@ public class DataPersona {
 	 			throw e;
 	 		}
 	 		try {
-	 			//if(keyResultSet!=null)keyResultSet.close();
+	 			
 	 			if(stmt!=null)stmt.close();
 	 			FactoryConexion.getInstancia().releaseConn();
 	 		} catch (SQLException e) {
 	 			e.printStackTrace();
 	 		}
 	 	}
-	 			 	
-		 			 		 
-		 }
+	 		
+		
+		public void modificar(Persona p) throws Exception{
+	 		PreparedStatement stmt=null;
+	 		
+	 		try {
+	 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+	 					"update personas set dni=?, nombre=?, apellido=?, habilitado=?, id_categoria=? where dni=?",
+	 					PreparedStatement.RETURN_GENERATED_KEYS
+	 					);
+	 			stmt.setInt(1, p.getIdpersona());
+	 			stmt.setString(2, p.getDni());
+	 			stmt.setString(3, p.getNombre());
+	 			stmt.setString(4, p.getApellido());
+	 			stmt.setBoolean(5, p.getHabilitado());
+	 			stmt.setInt(6, p.getCategoria().getId_categoria());
+	 			stmt.executeUpdate();
+	 				 			 			
+	 		}catch (SQLException | AppDataException e) {
+	 			throw e;
+	 		}
+	 		try {
+	 			if(stmt!=null)stmt.close();
+	 			FactoryConexion.getInstancia().releaseConn();
+	 		} catch (SQLException e) {
+	 			e.printStackTrace();
+	 		}
+	 	}
+}		 		 
+		 
 		
 	
 	
