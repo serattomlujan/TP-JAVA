@@ -5,11 +5,6 @@ import java.awt.EventQueue;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import Controlers.CtrlABMTipoElemento;
-
-import Entity.Tipo_Elemento;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -23,7 +18,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
+
+
 import javax.swing.JFrame;
+
+import controlers.CtrlABMTipoElemento;
+import entity.Tipo_Elemento;
 
 public class ABMCTipoElemento extends JInternalFrame {
 	
@@ -104,7 +104,8 @@ public class ABMCTipoElemento extends JInternalFrame {
  			}
  		});
 		
-		JCheckBox chkEncargado = new JCheckBox("Encargado");
+		chkEncargado = new JCheckBox("Encargado");
+		chkEncargado.setSelected(true);
 		
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addMouseListener(new MouseAdapter() {
@@ -236,7 +237,7 @@ public class ABMCTipoElemento extends JInternalFrame {
  			 	}
  	
  	private void mapearAForm(Tipo_Elemento t){
- 		this.txtNombre.setText(t.getNombre());
+ 		this.txtNombre.setText(t.getNombre_tipo());
  		this.txtCantMax.setText(String.valueOf(t.getCant_max()));
  		this.txtLimite.setText(String.valueOf(t.getLim_tiempo()));
  		this.txtDiasAntic.setText(String.valueOf(t.getDias_anticip()));
@@ -250,7 +251,7 @@ public class ABMCTipoElemento extends JInternalFrame {
  		if(!this.txtID.getText().isEmpty()){
  			t.setIdtipo_elemento(Integer.parseInt(this.txtID.getText()));
  		}
- 		t.setNombre(this.txtNombre.getText());
+ 		t.setNombre_tipo(this.txtNombre.getText());
  		t.setCant_max(Integer.parseInt(this.txtCantMax.getText()));
  		t.setLim_tiempo(Integer.parseInt(this.txtLimite.getText()));
  		t.setDias_anticip(Integer.parseInt(this.txtDiasAntic.getText()));

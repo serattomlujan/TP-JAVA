@@ -1,8 +1,9 @@
 
 
-package Data;
+package data;
 import java.sql.*;
-import Util.AppDataException;
+
+import util.AppDataException;
 
 public class FactoryConexion {
 	private String driver="com.mysql.jdbc.Driver";

@@ -1,8 +1,9 @@
-package Data;
+package data;
  import java.util.ArrayList;
- import java.sql.*;
- import Entity.*;
- import Util.AppDataException;
+import java.sql.*;
+
+import util.AppDataException;
+import entity.*;
  
 
 public class DataPersona {
@@ -13,7 +14,8 @@ public class DataPersona {
 		ArrayList<Persona> pers= new ArrayList<Persona>();
 		try {
 		 	stmt = FactoryConexion.getInstancia().getConn().createStatement();
-		 	rs = stmt.executeQuery("select * from reservas.personas p inner join reservas.categorias c on p.id_categoria=c.id_categoria");
+		 	rs = stmt.executeQuery("select * from reservas.personas p "
+		 			+ "inner join reservas.categorias c on p.id_categoria=c.id_categoria");
 		 	if(rs!=null){
 		 		while(rs.next()){
 		 			Persona p=new Persona();
@@ -49,7 +51,8 @@ public class DataPersona {
 		 		ResultSet rs=null;
 		 		try {
 		 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-		 					"select idpersona, nombre, apellido, dni, habilitado, p.id_categoria, c.descripcion from personas p "
+		 					"select idpersona, nombre, apellido, dni, habilitado, p.id_categoria, "
+		 					+ "c.descripcion from personas p "
 		 					+ "inner join categorias c on p.id_categoria=c.id_categoria where dni=?");
 		 			stmt.setString(1, per.getDni());
 		 			rs=stmt.executeQuery();
@@ -86,7 +89,8 @@ public class DataPersona {
 		 		ResultSet keyResultSet=null;
 		 		try {
 		 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-		 					"insert into personas(dni, nombre, apellido, habilitado, id_categoria) values (?,?,?,?.?)",
+		 					"insert into personas(dni, nombre, apellido, habilitado, id_categoria) "
+		 					+ "values (?,?,?,?,?)",
 		 					PreparedStatement.RETURN_GENERATED_KEYS
 		 					);
 		 			stmt.setString(1, p.getDni());
@@ -110,8 +114,59 @@ public class DataPersona {
 		 			e.printStackTrace();
 		 		}
 		 	}
-		 			 		 
-		 }
+		
+		public void remove(Persona p) throws Exception{
+	 		PreparedStatement stmt=null;
+	 		
+	 		try {
+	 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+	 					"delete from personas where dni=?",
+	 					PreparedStatement.RETURN_GENERATED_KEYS
+	 					);
+	 			stmt.setString(1, p.getDni());
+	 			stmt.executeUpdate();
+	 			
+	 		} catch (SQLException | AppDataException e) {
+	 			throw e;
+	 		}
+	 		try {
+	 			
+	 			if(stmt!=null)stmt.close();
+	 			FactoryConexion.getInstancia().releaseConn();
+	 		} catch (SQLException e) {
+	 			e.printStackTrace();
+	 		}
+	 	}
+	 		
+		
+		public void modificar(Persona p) throws Exception{
+	 		PreparedStatement stmt=null;
+	 		
+	 		try {
+	 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+	 					"update personas set dni=?, nombre=?, apellido=?, habilitado=?, id_categoria=? where dni=?",
+	 					PreparedStatement.RETURN_GENERATED_KEYS
+	 					);
+	 			stmt.setInt(1, p.getIdpersona());
+	 			stmt.setString(2, p.getDni());
+	 			stmt.setString(3, p.getNombre());
+	 			stmt.setString(4, p.getApellido());
+	 			stmt.setBoolean(5, p.getHabilitado());
+	 			stmt.setInt(6, p.getCategoria().getId_categoria());
+	 			stmt.executeUpdate();
+	 				 			 			
+	 		}catch (SQLException | AppDataException e) {
+	 			throw e;
+	 		}
+	 		try {
+	 			if(stmt!=null)stmt.close();
+	 			FactoryConexion.getInstancia().releaseConn();
+	 		} catch (SQLException e) {
+	 			e.printStackTrace();
+	 		}
+	 	}
+}		 		 
+		 
 		
 	
 	

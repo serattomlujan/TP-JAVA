@@ -9,17 +9,20 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTable;
 
-import Controlers.CtrlABMTipoElemento;
-import Entity.Tipo_Elemento;
-
 import java.awt.Color;
+
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.beansbinding.BeanProperty;
+
+import controlers.CtrlABMTipoElemento;
+import entity.Tipo_Elemento;
+
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -82,15 +85,15 @@ public ListadoTipos() {
  }
  protected void initDataBindings() {
  JTableBinding<Tipo_Elemento, List<Tipo_Elemento>, JTable> jTableBinding = SwingBindings.createJTableBinding(UpdateStrategy.READ, ti, table);
- BeanProperty<Tipo_Elemento, String> personaBeanProperty = BeanProperty.create("nombre");
-jTableBinding.addColumnBinding(personaBeanProperty).setColumnName("Nombre").setEditable(false);
-BeanProperty<Tipo_Elemento, String> personaBeanProperty_1 = BeanProperty.create("cant_max");
-jTableBinding.addColumnBinding(personaBeanProperty_1).setColumnName("Cantidad maxima").setEditable(false);
+ BeanProperty<Tipo_Elemento, String> tipoBeanProperty = BeanProperty.create("nombre_tipo");
+jTableBinding.addColumnBinding(tipoBeanProperty).setColumnName("Nombre").setEditable(false);
+BeanProperty<Tipo_Elemento, String> tipoBeanProperty_1 = BeanProperty.create("cant_max");
+jTableBinding.addColumnBinding(tipoBeanProperty_1).setColumnName("Cantidad maxima").setEditable(false);
 
-BeanProperty<Tipo_Elemento, String> personaBeanProperty_2 = BeanProperty.create("lim_tiempo");
-jTableBinding.addColumnBinding(personaBeanProperty_2).setColumnName("Limite de Tiempo").setEditable(false);
-BeanProperty<Tipo_Elemento, String> personaBeanProperty_3 = BeanProperty.create("dias_anticip");
-jTableBinding.addColumnBinding(personaBeanProperty_3).setColumnName("Dias Anticipación").setEditable(false);
+BeanProperty<Tipo_Elemento, String> tipoBeanProperty_2 = BeanProperty.create("lim_tiempo");
+jTableBinding.addColumnBinding(tipoBeanProperty_2).setColumnName("Limite de Tiempo").setEditable(false);
+BeanProperty<Tipo_Elemento, String> tipoBeanProperty_3 = BeanProperty.create("dias_anticip");
+jTableBinding.addColumnBinding(tipoBeanProperty_3).setColumnName("Dias Anticipación").setEditable(false);
 
 jTableBinding.setEditable(false);
 jTableBinding.bind();

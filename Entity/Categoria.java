@@ -1,4 +1,4 @@
-package Entity;
+package entity;
 
 public class Categoria {
 
@@ -19,7 +19,7 @@ public class Categoria {
 		this.descripcion = nombre;
 	}
 	
-	
+	public Categoria(){};
 	
 	@Override
 	 public String toString(){

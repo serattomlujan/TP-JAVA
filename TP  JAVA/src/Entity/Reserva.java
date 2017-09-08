@@ -1,5 +1,5 @@
 
-package entity;
+package Entity;
 import java.util.Date;
 
 public class Reserva {
@@ -8,10 +8,6 @@ public class Reserva {
 	private Date hora;
 	private String estado;
 	private String detalle;
-	private Elemento elemento;
-	private Persona persona;
-	
-	
 	public int getId_reserva() {
 		return id_reserva;
 	}
@@ -42,22 +38,5 @@ public class Reserva {
 	public void setDetalle(String detalle) {
 		this.detalle = detalle;
 	}
-	
-	public Reserva(){}
-	
-	public Elemento getElemento() {
-		return elemento;
-	}
-	
-	public void setElemento(Elemento elemento) {
-		this.elemento = elemento;
-	}
-	public Persona getPersona() {
-		return persona;
-	}
-	public void setPersona(Persona persona) {
-		this.persona = persona;
-	};
-	
 
 }

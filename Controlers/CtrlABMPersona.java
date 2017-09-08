@@ -1,13 +1,13 @@
-package Controlers;
+package controlers;
 import java.util.ArrayList;
 
-import Data.DataCategoria;
-import Data.DataPersona;
-import Entity.Persona;
-import Entity.Categoria;
+import data.DataCategoria;
+import data.DataPersona;
+import entity.Categoria;
+import entity.Persona;
 
 public class CtrlABMPersona {
-	private DataPersona dataPer;
+    private DataPersona dataPer;
 	private DataCategoria dataCat;
 	private ArrayList<Persona> pers;
 	
@@ -15,6 +15,7 @@ public class CtrlABMPersona {
 	public CtrlABMPersona(){
 	dataPer= new DataPersona();
 	pers= new ArrayList<Persona>();
+	dataCat=new DataCategoria();
 	//pers.add(new Persona("343434","Hugo","Lopez",true));
 	//pers.add(new Persona("353535","Ana","Martinez",true))
 	}
@@ -25,12 +26,14 @@ public class CtrlABMPersona {
 	
 	
    public void delete(Persona p) throws Exception{
-	   this.pers.remove(p);}
+	   dataPer.remove(p);}
    
 		
 	public void update(Persona p) throws Exception{
-		this.delete(p);
-		this.add(p);}
+		//dataPer.remove(p);
+		//dataPer.add(p);
+		dataPer.modificar(p);
+	}
 		
 		
 		

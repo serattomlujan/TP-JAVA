@@ -1,8 +1,8 @@
-package Controlers;
+package controlers;
 import java.util.ArrayList;
 
-import Data.DataTipoElemento;
-import Entity.Tipo_Elemento;
+import data.DataTipoElemento;
+import entity.Tipo_Elemento;
 
 public class CtrlABMTipoElemento {
 		private DataTipoElemento dataTiEl;
@@ -20,20 +20,20 @@ public class CtrlABMTipoElemento {
 	
 	
    public void delete(Tipo_Elemento t) throws Exception{
-	   this.te.remove(t);}
+	   dataTiEl.remove(t);}
    
 		
 	public void update(Tipo_Elemento t) throws Exception{
-		this.delete(t);
-		this.add(t);}
+		dataTiEl.update(t);}
 		
+	
 	public Tipo_Elemento getByNomTipo(Tipo_Elemento t) throws Exception{
 		return this.dataTiEl.getByNomTipo(t);
 		}	
 	
 	public Tipo_Elemento getByNomTipo(String nom) throws Exception{
 	Tipo_Elemento t=new Tipo_Elemento();
-	t.setNombre(nom);
+	t.setNombre_tipo(nom);
 	return getByNomTipo(t);
 	}
 	public ArrayList<Tipo_Elemento>getAll() throws Exception{

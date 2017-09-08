@@ -1,4 +1,4 @@
-package entity;
+package Entity;
 
 public class Persona {
 	private int idpersona;
@@ -8,16 +8,8 @@ public class Persona {
 	private String usuario;
 	private String contrasenia;
 	private boolean habilitado;
-	private Categoria categoria;
 	
 	
-	public Categoria getCategoria(){
-		 return categoria;
-		 }
-
-	public void setCategoria(Categoria categoria){
-		 this.categoria=categoria;
-		 }
 	public int getIdpersona() {
 		return idpersona;
 	}
@@ -61,20 +53,6 @@ public class Persona {
 		this.habilitado = habilitado;
 	}
 	
-	public Persona (String dni, String nombre, String apellido, boolean habilitado){
-		 this.setDni(dni);
-		 this.setNombre(nombre);
-		 this.setApellido(apellido);
-		 this.setHabilitado(habilitado);
 	
-		 }
-	public Persona(){}
-	 
-	 @Override
-	 public boolean equals(Object p){
-	 return (p instanceof Persona) &&
-	 (((Persona)p).getDni().equals(this.getDni()));
-	 }
-	 }
 
-
+}

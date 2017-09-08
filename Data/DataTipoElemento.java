@@ -1,11 +1,11 @@
-package Data;
+package data;
 import java.util.ArrayList;
 
 
 import java.sql.*;
 
-import Entity.*;
-import Util.AppDataException;
+import util.AppDataException;
+import entity.*;
 
 
 public class DataTipoElemento {
@@ -22,7 +22,7 @@ public class DataTipoElemento {
 				while(rs.next()){
 					Tipo_Elemento t=new Tipo_Elemento();
 					t.setIdtipo_elemento(rs.getInt("idtipo_elemento"));
-					t.setNombre(rs.getString("nombre"));
+					t.setNombre_tipo(rs.getString("nombre_tipo"));
 					t.setCant_max(rs.getInt("cant_max"));
 					t.setLim_tiempo(rs.getInt("lim_tiempo"));
 					t.setDias_anticip(rs.getInt("dias_anticip"));
@@ -51,13 +51,13 @@ public class DataTipoElemento {
  		ResultSet rs=null;
  		try {
  			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
- 					"select * from tipo_elemento where nombre=?");
- 			stmt.setString(1, te.getNombre());
+ 					"select * from tipo_elemento where nombre_tipo=?");
+ 			stmt.setString(1, te.getNombre_tipo());
  			rs=stmt.executeQuery();
  			if(rs!=null && rs.next()){
  					t=new Tipo_Elemento();
  					t.setIdtipo_elemento(rs.getInt("idtipo_elemento"));
- 					t.setNombre(rs.getString("nombre"));
+ 					t.setNombre_tipo(rs.getString("nombre_tipo"));
   					t.setCant_max(rs.getInt("cant_max"));
  					t.setLim_tiempo(rs.getInt("lim_tiempo"));
  					t.setDias_anticip(rs.getInt("dias_anticip"));
@@ -84,10 +84,10 @@ throw e;
  		ResultSet keyResultSet=null;
  		try {
  			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
- 					"insert into tipo_elemento(nombre, cant_max, lim_tiempo, dias_anticip, encargado) values (?,?,?,?.?)",
+ 					"insert into tipo_elemento(nombre_tipo, cant_max, lim_tiempo, dias_anticip, encargado) values (?,?,?,?,?)",
  					PreparedStatement.RETURN_GENERATED_KEYS
  					);
- 			stmt.setString(1, t.getNombre());
+ 			stmt.setString(1, t.getNombre_tipo());
  			stmt.setInt(2, t.getCant_max());
  			stmt.setInt(3, t.getLim_tiempo());
  			stmt.setInt(4, t.getDias_anticip());
@@ -110,4 +110,53 @@ throw e;
  	}
  		
 
+	public void remove(Tipo_Elemento t) throws Exception{
+ 		PreparedStatement stmt=null;
+ 			try {
+ 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+ 					"delete from tipo_elemento where nombre_tipo=?",
+ 					PreparedStatement.RETURN_GENERATED_KEYS
+ 					);
+ 			stmt.setString(1, t.getNombre_tipo());
+ 			stmt.executeUpdate();
+ 			
+ 		} catch (SQLException | AppDataException e) {
+ 			throw e;
+ 		}
+ 		try {
+ 			if(stmt!=null)stmt.close();
+ 			FactoryConexion.getInstancia().releaseConn();
+ 		} catch (SQLException e) {
+ 			e.printStackTrace();
+ 		}
+ 	}
+	
+	public void update(Tipo_Elemento t) throws Exception{
+ 		PreparedStatement stmt=null;
+ 		
+ 		try {
+ 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+ 					"update tipo_elemento "
+ 					+ "set nombre_tipo=?, cant_max=?, lim_tiempo=?, dias_anticip=?, encargado=? "
+ 					+ "where idtipo_elemento=?",
+ 					PreparedStatement.RETURN_GENERATED_KEYS
+ 					);
+ 			stmt.setString(1, t.getNombre_tipo());
+ 			stmt.setInt(2, t.getCant_max());
+ 			stmt.setInt(3, t.getLim_tiempo());
+ 			stmt.setInt(4, t.getDias_anticip());
+ 			stmt.setBoolean(5, t.getEncargado());
+ 			stmt.setInt(6, t.getIdtipo_elemento());
+ 			stmt.executeUpdate();
+ 			
+ 		} catch (SQLException | AppDataException e) {
+ 			throw e;
+ 		}
+ 		try {
+ 			if(stmt!=null)stmt.close();
+ 			FactoryConexion.getInstancia().releaseConn();
+ 		} catch (SQLException e) {
+ 			e.printStackTrace();
+ 		}
+ 	}
 }
